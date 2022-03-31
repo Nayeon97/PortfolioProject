@@ -8,7 +8,6 @@ const CareerSkillAddEdit = ({
   portfolioOwnerId,
   portfolioOwner,
   isEditable, 
-  IsEditing, 
   skills,
   setSkill,
   setOpen, 

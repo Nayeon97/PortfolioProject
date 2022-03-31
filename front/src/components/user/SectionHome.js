@@ -1,8 +1,7 @@
 import React, { useEffect, useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Container, Row, Form, Card, Button } from "react-bootstrap";
+import { Container, Form, Button } from "react-bootstrap";
 
-
+import getSkill from "../common/Skill";
 import * as Api from "../../api";
 import UserCard from "./UserCard";
 import { UserStateContext } from "../../App";
@@ -10,16 +9,10 @@ import { UserStateContext } from "../../App";
 import './Style.css';
 
 function SectionHome() {
-  const navigate = useNavigate();
   const userState = useContext(UserStateContext);
   const [career, setCareer] = useState("0");
   const [languageList, setLanguageList] = useState("0");
   const [users, setUsers] = useState([]);
-
-  const skiils =[{value:'0', name:'언어'}, {value: 'Java', name: 'Java'}, {value: 'Javasript', name: 'Javascript'}, {value: 'jquery', name:'jquery'},
-  {value: 'Python', name: 'Python'},{value: 'Html5', name: 'Html5'},{value: 'Css3', name: 'Css3'},{value: 'node.js', name:'node.js'},
-  {value: 'react', name:'react'},{value: 'mongodb', name:'mongodb'},{value: 'mongoose', name:'mongoose'}, {value: 'django', name:'django'},
-  {value: 'mysql', name: 'mysql'}, {value: 'aws', name:'aws'}, {value: 'linux', name:'linux'}, {value: 'spring framework', name:'spring framework'}];
 
   useEffect(() => {
     Api.get("userlist").then((res) => setUsers(res.data));
@@ -65,8 +58,8 @@ function SectionHome() {
       marginBottom: "20px",
       marginLeft: "13px"
     }}>
-    {  skiils.map((skill, index) => {
-        return (<option key={index} value={skill.value}>{skill.name}</option>)
+    {  getSkill.map((skill, index) => {
+        return (<option key={index} value={skill.value}>{skill.value || skill.name}</option>)
        })
         }
       </Form.Select>
