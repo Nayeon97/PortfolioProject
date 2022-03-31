@@ -2,14 +2,13 @@ import React, { useEffect, useState, useContext } from "react";
 import { Card, Button, Row, Col } from "react-bootstrap";
 import * as Api from "../../api";
 import Award from "./Award";
-import AwardAddForm from "./AwardAddForm";
+import AwardAddEditForm from "./AwardAddEditForm";
 
 import {UserContext} from "../common/Context";
 
 function Awards() {
   //useState로 awards 상태를 생성
   const [awards, setAwards] = useState([]);
-  //useState로 isAdding 상태를 생성
   const [isAdding, setIsAdding] = useState(false);
   const { isEditable, portfolioOwnerId } = useContext(UserContext);
 
@@ -50,11 +49,11 @@ function Awards() {
             key={award.id}
             award={award}
             setAwards={setAwards}
-            isEditable={isEditable}
+            isEditable={isEditable}        
             deleteHandler={deleteHandler}
           />
         ))}
-         {isEditable && (
+        {isEditable && (
         <Row className="mt-3 text-center mb-4">
         <Col sm={{ span: 20 }}>
         <Button
@@ -69,7 +68,7 @@ function Awards() {
         </Row>
         )}
         {isAdding && (
-          <AwardAddForm
+          <AwardAddEditForm
             portfolioOwnerId={portfolioOwnerId}
             setAwards={setAwards}
             setIsAdding={setIsAdding}

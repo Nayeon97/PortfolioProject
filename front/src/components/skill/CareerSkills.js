@@ -28,7 +28,6 @@ const CareerSkills = () => {
     }
   }, [portfolioOwnerId]);
 
-  //console.log(portfolioOwner);
 
   const onClick = () => {
     setOpen((prev)=> !prev);

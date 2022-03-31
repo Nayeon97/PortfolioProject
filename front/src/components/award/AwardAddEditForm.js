@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import { Button, Form, Col, Row } from "react-bootstrap";
 import * as Api from "../../api";
 
-function AwardEditForm({ currentAward, setAwards, setIsEditing }) {
+function AwardAddEditForm({ currentAward, portfolioOwnerId,isEditing,setAwards, setIsEditing, setIsAdding }) {
   //useState로 title 상태를 생성
   const [title, setTitle] = useState(currentAward.title);
   //useState로 description 상태를 생성
   const [description, setDescription] = useState(currentAward.description);
 
-  const handleSubmit = async (e) => {
+  const handleEditSubmit = async (e) => {
     e.preventDefault();
 
     // currentAward의 user_id를 userId 변수에 할당
@@ -38,8 +38,34 @@ function AwardEditForm({ currentAward, setAwards, setIsEditing }) {
 
   };
 
+  const handleAddSubmit = async(e) =>{
+    const userId = portfolioOwnerId;
+    
+    try{
+    // "award/create" 엔드포인트로 POST 요청
+      await Api.post("award/create", {
+      userId: portfolioOwnerId,
+      title,
+      description,
+    });
+
+    // "awardlist/유저id" 엔드포인트로 GET 요청
+    const res = await Api.get("awardlist", userId);
+    // awards를 response의 data로 세팅
+    setAwards(res.data);
+    setIsAdding(false);
+    }
+    catch(error){
+      console.log(error);
+      if (error.response) {
+       const { data } = error.response;
+       console.error("data : ", data);
+     }
+    } 
+  }
+
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form>
       <Form.Group controlId="awardEditTitle">
         <Form.Control
           type="text"
@@ -60,17 +86,35 @@ function AwardEditForm({ currentAward, setAwards, setIsEditing }) {
 
       <Form.Group as={Row} className="mt-3 text-center mb-4">
         <Col sm={{ span: 20 }}>
+         {isEditing? 
+         (
           <Button 
-            mb="10"
-            style={{
-             border:"none",
-             backgroundColor:"#339AF0"
-           }} 
-          variant="primary"
-           type="submit" 
-           className="me-3">
-            확인
-          </Button>
+          mb="10"
+          style={{
+           border:"none",
+           backgroundColor:"#339AF0"
+         }} 
+        variant="primary"
+         type="submit" 
+         className="me-3"
+         onClick={handleEditSubmit}>
+          확인
+        </Button>
+         ): 
+         (
+          <Button 
+          mb="10"
+          style={{
+           border:"none",
+           backgroundColor:"#339AF0"
+         }} 
+        variant="primary"
+         type="submit" 
+         className="me-3"
+         onClick={handleAddSubmit}>
+          확인
+        </Button>
+         )}
           <Button 
            mb="10"
            style={{
@@ -87,4 +131,4 @@ function AwardEditForm({ currentAward, setAwards, setIsEditing }) {
   );
 }
 
-export default AwardEditForm;
+export default AwardAddEditForm;
