@@ -1,15 +1,16 @@
-import {useState, useEffect ,useRef} from 'react';
+import {useState, useEffect ,useContext} from 'react';
 import { Card, Row, Button, Col } from "react-bootstrap";
 import EducationAddForm from './EducationAddForm';
 import Education  from './Education';
 import * as Api from "../../api";
 
+import {UserContext} from "../common/Context";
 
-const Educations = ({portfolioOwnerId, isEditable}) => {
+const Educations = () => {
   
   const [open, setOpen] = useState(false); 
   const [educations, setEducations] = useState([]);
-  
+  const { isEditable, portfolioOwnerId } = useContext(UserContext);
   // 삭제기능
   const deleteHandler = async (id) => {
     try {

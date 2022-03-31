@@ -1,15 +1,17 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import { Form, Button, Col, Row, Card} from 'react-bootstrap';
 import CareerSkillAddEdit from "./CareerSkillAddEdit";
 import * as Api from "../../api";
 import CareerSkillCard from './CareerSkilCard';
+import {UserContext} from "../common/Context";
 
-const CareerSkills = ({portfolioOwnerId, portfolioOwner,isEditable}) => {
+const CareerSkills = () => {
   
   const [isEditing, setIsEditing] = useState(false); // 편집버튼 
   const [checkData, setCheckData] = useState(false); // data 유무 확인 
   const [open, setOpen] = useState(false);
   const [skills, setSkill] = useState([]); // 백에서 가져옴
+  const { isEditable, portfolioOwnerId, portfolioOwner } = useContext(UserContext);
   
   useEffect(() => { 
     try{

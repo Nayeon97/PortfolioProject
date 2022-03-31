@@ -1,8 +1,10 @@
 import React, { useContext, useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Container, Col, Row, Button, Card, Image } from "react-bootstrap";
+import { Container, Col, Row, Card } from "react-bootstrap";
 import { UserStateContext } from "../App";
 import * as Api from "../api";
+
+import { UserContext } from './common/Context';
 
 import './user/Style.css';
 
@@ -57,8 +59,15 @@ function Portfolio(isClick) {
   if (!isFetchCompleted) {
     return "loading...";
   }
+
+  const userContext = {
+    isEditable: portfolioOwner.id === userState.user?.id,
+    portfolioOwnerId: portfolioOwner.id,
+    portfolioOwner: portfolioOwner
+  }
   return (
-    <Container className='mypage'>
+     <UserContext.Provider value={userContext}>
+        <Container className='mypage'>
       <Row>
         <Col>
         <button
@@ -76,11 +85,7 @@ function Portfolio(isClick) {
          {portfolioOwner.id === userState.user?.id ?
           (
             <>
-            <User
-                isClick = {isClick}
-                portfolioOwnerId={portfolioOwner.id}
-                isEditable={portfolioOwner.id === userState.user?.id}
-              />
+            <User isClick = {isClick}/>
             </>
           )
           :
@@ -102,39 +107,24 @@ function Portfolio(isClick) {
           )
         }
         <div className='projects'>
-        <Projects
-             portfolioOwnerId={portfolioOwner.id} // 사용자 아이디 느낌...?
-             isEditable={portfolioOwner.id === userState.user?.id}
-             />
+        <Projects/>
         </div>
         <div className='educations'>
-        <Educations
-             portfolioOwnerId={portfolioOwner.id} // 사용자 아이디 느낌...?
-             isEditable={portfolioOwner.id === userState.user?.id}
-             />
+        <Educations/>
         </div>
         <div className='awards'>
-        <Awards
-              portfolioOwnerId={portfolioOwner.id}
-              isEditable={portfolioOwner.id === userState.user?.id}
-            />
+        <Awards/>
         </div>
         <div className='certificates'>
-        <Certificates
-              portfolioOwnerId={portfolioOwner.id}
-              isEditable={portfolioOwner.id === userState.user?.id}
-            />
+        <Certificates/>
         </div>
         <div className='CareerSkill'>
-        <CareerSkills
-              portfolioOwner = {portfolioOwner}
-              portfolioOwnerId={portfolioOwner.id}
-              isEditable={portfolioOwner.id === userState.user?.id}
-            />
+        <CareerSkills/>
         </div>
         </Col>
       </Row>
     </Container>
+     </UserContext.Provider>
   );
 }
 
