@@ -13,7 +13,7 @@ function Award({ award, setAwards, isEditable, deleteHandler }) {
           currentAward={award}
           setAwards={setAwards}
           setIsEditing={setIsEditing}
-          isEditing={isEditing}
+          isEditing = {isEditing}
         />
       ) : (
         <AwardCard

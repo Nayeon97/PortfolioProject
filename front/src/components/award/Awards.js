@@ -10,7 +10,8 @@ function Awards() {
   //useState로 awards 상태를 생성
   const [awards, setAwards] = useState([]);
   const [isAdding, setIsAdding] = useState(false);
-  const { isEditable, portfolioOwnerId } = useContext(UserContext);
+  
+  const {isEditable, portfolioOwnerId } = useContext(UserContext);
 
   // 삭제기능
   const deleteHandler = async (id) => {
@@ -49,7 +50,7 @@ function Awards() {
             key={award.id}
             award={award}
             setAwards={setAwards}
-            isEditable={isEditable}        
+            isEditable={isEditable} 
             deleteHandler={deleteHandler}
           />
         ))}
@@ -71,7 +72,9 @@ function Awards() {
           <AwardAddEditForm
             portfolioOwnerId={portfolioOwnerId}
             setAwards={setAwards}
+            isAdding ={isAdding}
             setIsAdding={setIsAdding}
+            awards={awards}
           />
         )}
       </Card.Body>
