@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import AwardEditForm from "./AwardEditForm";
+import AwardAddEditForm from "./AwardAddEditForm";
 import AwardCard from "./AwardCard";
 
 function Award({ award, setAwards, isEditable, deleteHandler }) {
@@ -9,10 +9,11 @@ function Award({ award, setAwards, isEditable, deleteHandler }) {
   return (
     <>
       {isEditing ? (
-        <AwardEditForm
+        <AwardAddEditForm
           currentAward={award}
           setAwards={setAwards}
           setIsEditing={setIsEditing}
+          isEditing = {isEditing}
         />
       ) : (
         <AwardCard

@@ -57,7 +57,6 @@ const LoginForm = ({show, handleClose, handleShow, showRegister}) => {
     } catch (err)
      {
        if(err.response){
-        const { data } = err.response;
         setEmail("");
         setPassword("");
         e.target.reset();

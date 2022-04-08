@@ -1,7 +1,8 @@
 import { Card, Button, Row, Col } from "react-bootstrap";
 import * as Api from '../../api'
+import AwardAddEditForm from './AwardAddEditForm';
 
-function AwardCard({ award, isEditable, setIsEditing, deleteHandler }) {
+function AwardCard({ award, isEditable, isEditing,setIsEditing, deleteHandler }) {
 
   return (
     <Card.Text>
@@ -23,7 +24,7 @@ function AwardCard({ award, isEditable, setIsEditing, deleteHandler }) {
             <Button
               variant="outline-info"
               size="sm"
-              onClick={() => setIsEditing((prev) => !prev)}
+              onClick={() => setIsEditing(true)}
               className="mr-3 mb-1"
             >
               편집

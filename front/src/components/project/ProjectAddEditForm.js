@@ -3,16 +3,22 @@ import { Form, Button, Col, Row} from 'react-bootstrap';
 
 import * as Api from "../../api";
 
-const ProjectAddForm = ({
+const ProjectAddEditForm = ({
   portfolioOwnerId, 
   setOpen,
-  setProjects
+  setProjects, 
+  isAdding, 
+  setIsAdding,
+  editProject,
+  setIsEditing,
+  setEditProject,
+  isEditing
 }) => {
   
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-  const [fromDate, setFromDate] = useState(new Date());
-  const [toDate, setToDate] = useState(new Date());
+  const [title, setTitle] = useState(isEditing? editProject.title : "");
+  const [content, setContent] = useState(isEditing? editProject.content : "");
+  const [fromDate, setFromDate] = useState(isEditing? editProject.fromDate : new Date());
+  const [toDate, setToDate] = useState(isEditing? editProject.toDate : new Date());
 
   const [warning, setWarning] = useState(false);
 
@@ -34,32 +40,56 @@ const ProjectAddForm = ({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    const userId = portfolioOwnerId;
-
-         //사용자가 입력한 데이터, post 요청! 
-   try{
+    if(isAdding) {
+      const userId = portfolioOwnerId;
+      //사용자가 입력한 데이터, post 요청! 
+    try{
     // "project/create" 엔드포인트로 post요청함.
-      await Api.post("project/create", {
-        userId,
-        title,
-        content,
-        fromDate,
-        toDate
-      });
+   await Api.post("project/create", {
+     userId,
+     title,
+     content,
+     fromDate,
+     toDate
+   });
 
-      // "projectlist/유저id" 엔드포인트로 get요청함.
-      const res = await Api.get(`projectlist/${userId}`);
-      setProjects(res.data);
-      setOpen(false);
-    }
+   // "projectlist/유저id" 엔드포인트로 get요청함.
+   const res = await Api.get(`projectlist/${userId}`);
+   setProjects(res.data);
+   setOpen(false);
+   }
    catch(error){
-      console.log(error);
-      if (error.response) {
-        const { data } = error.response;
-        console.error("data : ", data);
-        }
+   console.log(error);
+   if (error.response) {
+     const { data } = error.response;
+     console.error("data : ", data);
+     }
+   }
+    }
+    else {
+      const userId = editProject.userId;
+
+      try{
+        await Api.put(`project/${editProject.id}`, {
+          userId,
+          title,
+          content,
+          fromDate,
+          toDate
+        });
+    
+        const res = await Api.get(`projectlist/${userId}`);
+        setEditProject(res.data);
+        setIsEditing(false);
       }
+      catch(error){
+        console.log(error);
+        if (error.response) {
+         const { data } = error.response;
+         console.error("data : ", data);
+       }
+    };
+    }
   };
 
   
@@ -110,6 +140,7 @@ const ProjectAddForm = ({
         <Button
          mb="10"
          disabled={disable}
+         onClick={handleSubmit}
          style={{
           border:"none",
           backgroundColor:"#339AF0"
@@ -126,7 +157,9 @@ const ProjectAddForm = ({
           backgroundColor:"#C4C4C4"
         }} 
         variant="secondary" 
-        onClick={() => setOpen((prev) => !prev)}
+        onClick={(e) => {
+          setIsAdding ? setIsAdding(false) : setIsEditing(false);
+        }}
         >
          취소
         </Button>
@@ -137,4 +170,4 @@ const ProjectAddForm = ({
   )}
 
 
-export default ProjectAddForm;
+export default ProjectAddEditForm;

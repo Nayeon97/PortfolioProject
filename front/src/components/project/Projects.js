@@ -1,14 +1,17 @@
-import {useState, useEffect ,useRef} from 'react';
+import {useState, useEffect ,useContext} from 'react';
 import { Card, Row, Button, Col } from "react-bootstrap";
-import ProjectAddForm from './ProjectAddForm';
+import ProjectAddEidtForm from './ProjectAddEditForm';
 import Project from './Project';
 import * as Api from "../../api";
 
+import {UserContext} from "../common/Context";
+
 // 제일 상위 컴포넌트! 
-const Projects = ({portfolioOwnerId, isEditable}) => {
-  console.log(portfolioOwnerId)
-  const [open, setOpen] = useState(false); // Add 버튼 누르면 open!
+const Projects = () => {
+
   const [projects, setProjects] = useState([]);
+  const {isEditable, portfolioOwnerId } = useContext(UserContext);
+  const [isAdding, setIsAdding] = useState(false);
 
   // 삭제기능
   const deleteHandler = async (id) => {
@@ -61,15 +64,17 @@ const Projects = ({portfolioOwnerId, isEditable}) => {
           backgroundColor:"#CFD3FF",
           borderRadius:50
         }} 
-        onClick={() => setOpen(true)}>+</Button>
+        onClick={() => setIsAdding(true)}>+</Button>
         </Col>
         </Row>
         )}
-          {open && (
-          <ProjectAddForm  
+          {isAdding && (
+          <ProjectAddEidtForm  
            portfolioOwnerId = {portfolioOwnerId}
-           setOpen = {setOpen}
            setProjects = {setProjects}
+           isAdding = {isAdding}
+           setIsAdding = {setIsAdding}
+           projects = {projects}
           />
         )}
      </Card.Body>

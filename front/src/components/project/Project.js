@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ProjectCard from "./ProjectCard";
-import ProjectEditForm from "./ProjectEditForm";
+import ProjectAddEditForm from "./ProjectAddEditForm";
 
 function Project({ project, setProjects , isEditable, deleteHandler }) {
   const [isEditing, setIsEditing] = useState(false);
@@ -8,17 +8,17 @@ function Project({ project, setProjects , isEditable, deleteHandler }) {
   return (
     <>
       {isEditing ? (
-        <ProjectEditForm
+        <ProjectAddEditForm
           editProject={project}
           setEditProject={setProjects}
           setIsEditing={setIsEditing}
+          isEditing = {isEditing}
         />
       ) : (
         <ProjectCard
           project={project}
           isEditable={isEditable}
           setIsEditing={setIsEditing}
-          setProjects={setProjects}
           deleteHandler={deleteHandler}
         />
       )}

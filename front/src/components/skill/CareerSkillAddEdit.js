@@ -2,21 +2,17 @@ import React, {useState} from 'react';
 import { Form, Button, Col, Row, Card} from 'react-bootstrap';
 import * as Api from "../../api";
 
+import getSkill from "../common/Skill";
+
 const CareerSkillAddEdit = ({
   portfolioOwnerId,
   portfolioOwner,
   isEditable, 
-  etIsEditing, 
   skills,
   setSkill,
   setOpen, 
   checkData}) => {
   
-  const skiils =[{value: '', name:'선택안함'}, {value: 'Java'}, {value: 'Javasript'}, {value: 'jquery'},
-  {value: 'Python'},{value: 'Html5'},{value: 'Css3'},{value: 'node.js'},
-  {value: 'react'},{value: 'mongodb'},{value: 'mongoose'}, {value: 'django'},
-  {value: 'mysql'}, {value: 'aws'}, {value: 'linux'}, {value: 'spring framework'}];
- 
   const [career, setCareer] = useState("");
   const [language, setLanguage] = useState({
     language1: "",
@@ -132,7 +128,7 @@ const CareerSkillAddEdit = ({
       marginBottom: "20px",
       marginLeft: "13px"
     }}>
-    {  skiils.map((skill, index) => {
+    {  getSkill.map((skill, index) => {
       return (<option key={index} value={skill.value}>{skill.value || skill.name}</option>)
        })
         }
@@ -147,7 +143,7 @@ const CareerSkillAddEdit = ({
       marginBottom: "20px",
       marginLeft: "20px"
       }}>
-    {  skiils.map((skill, index) => {
+    {  getSkill.map((skill, index) => {
          return (<option key={index} value={skill.value}>{skill.value || skill.name}</option>)
        })
         }
@@ -162,7 +158,7 @@ const CareerSkillAddEdit = ({
       marginBottom: "20px",
       marginLeft: "20px"
     }}>
-       {skiils.map((skill, index) => {
+       {getSkill.map((skill, index) => {
         return (<option key={index} value={skill.value}>{skill.value || skill.name}</option>)
        })
         }

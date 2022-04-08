@@ -1,8 +1,10 @@
 import { useNavigate } from "react-router-dom";
+
 import { Card, Row, Button, Col, Image } from "react-bootstrap";
 import * as Api from "../../api";
 import lionImg from '../imgs/lion.png';
 import './Style.css';
+
 
 // homeUser
 function UserCard({ user,setIsEditing, isEditable, isNetwork, isClick }) {
@@ -32,11 +34,22 @@ function UserCard({ user,setIsEditing, isEditable, isNetwork, isClick }) {
      <Card className={isClick ? "myPageCard" : "homeUserCard"} >
       <Card.Body style={{textAlign: "center"}}>
         <Col className="justify-content-md-center">
-          <Card.Img
-            style={{ width: "10rem", height: "8rem" , marginTop: "20px" }}
-            className="mb-3"
-            src={lionImg}  
-          />
+        {
+            isNetwork ? (
+              <Card.Img
+              style={{ width: "10rem", height: "8rem" , marginTop: "20px" }}
+              className='networkUserCard'
+              src={lionImg} 
+              onClick={onClick}
+            />
+            ) : (
+              <Card.Img
+              style={{ width: "10rem", height: "8rem" , marginTop: "20px" }}
+              className="mb-3"
+              src={lionImg}  
+            />
+            )
+          }
         </Col>
         <div className='userName'>{user?.name}</div>
         <div className='userEmail'>{user?.email}</div>
@@ -69,14 +82,7 @@ function UserCard({ user,setIsEditing, isEditable, isNetwork, isClick }) {
 
         {isNetwork && (
           <div style={{display: "flex", marginLeft:"10px",marginTop: "50px"}}>
-          <button
-            className='networkBtn'
-            onClick={onClick}>
-               🚀  
-           </button>
-           <div>
-           <Image className="homeImg" src={('./imgs/eye.png')}/>
-           </div>
+           <p>👀</p>
            <div className='clickCount'  style={{color: "#868e96"}}>{user.visited}</div>
           </div>
         )}

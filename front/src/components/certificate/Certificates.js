@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Card, Button, Row, Col } from "react-bootstrap";
 import * as Api from "../../api";
 import Certificate from "./Certificate";
-import CertificateAddForm from "./CertificateAddForm";
+import CertificateAddEditForm from "./CertificateAddEditForm";
 
-function Certificates({ portfolioOwnerId, isEditable }) {
+import {UserContext} from "../common/Context";
+
+function Certificates() {
   //useState로 certificates 상태를 생성
   const [certificates, setCertificates] = useState([]);
   //useState로 isAdding 상태를 생성
   const [isAdding, setIsAdding] = useState(false);
-
+  const { isEditable, portfolioOwnerId } = useContext(UserContext);
   // 삭제기능
   const deleteHandler = async (id) => {
     try {
@@ -58,10 +60,12 @@ function Certificates({ portfolioOwnerId, isEditable }) {
           </Row>
         )}
         {isAdding && (
-          <CertificateAddForm
+          <CertificateAddEditForm
             portfolioOwnerId={portfolioOwnerId}
             setCertificates={setCertificates}
+            isAdding = {isAdding}
             setIsAdding={setIsAdding}
+            certificates = {certificates}
           />
         )}
       </Card.Body>

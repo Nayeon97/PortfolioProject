@@ -1,15 +1,16 @@
-import {useState, useEffect ,useRef} from 'react';
+import {useState, useEffect ,useContext} from 'react';
 import { Card, Row, Button, Col } from "react-bootstrap";
-import EducationAddForm from './EducationAddForm';
+import EducationAddEditForm from './EducationAddEditForm';
 import Education  from './Education';
 import * as Api from "../../api";
 
+import {UserContext} from "../common/Context";
 
-const Educations = ({portfolioOwnerId, isEditable}) => {
+const Educations = () => {
   
-  const [open, setOpen] = useState(false); 
   const [educations, setEducations] = useState([]);
-  
+  const [isAdding, setIsAdding] = useState(false);
+  const { isEditable, portfolioOwnerId } = useContext(UserContext);
   // 삭제기능
   const deleteHandler = async (id) => {
     try {
@@ -63,15 +64,17 @@ const Educations = ({portfolioOwnerId, isEditable}) => {
               backgroundColor:"#CFD3FF",
               borderRadius:50
             }} 
-            onClick={() => setOpen(true)}>+</Button>
+            onClick={() => setIsAdding(true)}>+</Button>
             </Col>
             </Row>
             )}
-              {open && (
-              <EducationAddForm  
-              portfolioOwnerId = {portfolioOwnerId}
-               setOpen = {setOpen}
-               setEducations = {setEducations} 
+              {isAdding && (
+              <EducationAddEditForm  
+               portfolioOwnerId = {portfolioOwnerId}
+               setEducations = {setEducations}
+               isAdding = {isAdding}
+               setIsAdding = {setIsAdding}
+               educations = {educations} 
               />
             )}
          </Card.Body>

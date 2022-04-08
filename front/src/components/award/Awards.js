@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Card, Button, Row, Col } from "react-bootstrap";
 import * as Api from "../../api";
 import Award from "./Award";
-import AwardAddForm from "./AwardAddForm";
-import AwardEditForm from "./AwardEditForm";
+import AwardAddEditForm from "./AwardAddEditForm";
 
-function Awards({ portfolioOwnerId, isEditable }) {
+import {UserContext} from "../common/Context";
+
+function Awards() {
   //useState로 awards 상태를 생성
   const [awards, setAwards] = useState([]);
-  //useState로 isAdding 상태를 생성
   const [isAdding, setIsAdding] = useState(false);
+  const {isEditable, portfolioOwnerId } = useContext(UserContext);
 
   // 삭제기능
   const deleteHandler = async (id) => {
@@ -48,11 +49,11 @@ function Awards({ portfolioOwnerId, isEditable }) {
             key={award.id}
             award={award}
             setAwards={setAwards}
-            isEditable={isEditable}
+            isEditable={isEditable} 
             deleteHandler={deleteHandler}
           />
         ))}
-         {isEditable && (
+        {isEditable && (
         <Row className="mt-3 text-center mb-4">
         <Col sm={{ span: 20 }}>
         <Button
@@ -67,10 +68,12 @@ function Awards({ portfolioOwnerId, isEditable }) {
         </Row>
         )}
         {isAdding && (
-          <AwardAddForm
+          <AwardAddEditForm
             portfolioOwnerId={portfolioOwnerId}
             setAwards={setAwards}
+            isAdding ={isAdding}
             setIsAdding={setIsAdding}
+            awards={awards}
           />
         )}
       </Card.Body>
