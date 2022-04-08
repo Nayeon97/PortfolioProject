@@ -40,9 +40,6 @@ function AwardCard({ award, isEditable, isEditing,setIsEditing, deleteHandler })
             </Button>
           </Col>
         )}
-        {isEditing && (
-          <AwardAddEditForm />
-        )}
       </Row>
     </Card.Text>
   );

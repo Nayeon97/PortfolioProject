@@ -2,15 +2,20 @@ import React, {useState} from 'react';
 import { Form, Button, Col, Row} from 'react-bootstrap';
 import * as Api from "../../api";
 
-const EducationAddForm = ({
-  portfolioOwnerId, 
-  setOpen,
-  setEducations
+const EducationAddEditForm = ({
+  isAdding,
+  setIsAdding,
+  editEducation,
+  setEditEducation,
+  isEditing, 
+  setIsEditing,
+  portfolioOwnerId,
+  setEducations,
 }) => {
 
-  const [school, setSchool] = useState("");
-  const [major, setMajor] = useState("");
-  const [position, setPosition] = useState("");
+  const [school, setSchool] = useState(isEditing? editEducation.school : "");
+  const [major, setMajor] = useState(isEditing? editEducation.major : "");
+  const [position, setPosition] = useState(isEditing? editEducation.position : "");
 
   const positionArray = ["재학 중", "학사 졸업", "석사 졸업", "박사 졸업"];
 
@@ -21,20 +26,45 @@ const EducationAddForm = ({
   const handleSubmit = async(e) => {
      e.preventDefault();
 
-     const userId = portfolioOwnerId;
+     if(isAdding) {
+      const userId = portfolioOwnerId;
 
-     //사용자가 입력한 데이터, post 요청! 
-     try{
-       await Api.post("education/create", {
-        userId,
-        school,
-        major,
-        position,
-      });
+      //사용자가 입력한 데이터, post 요청! 
+      try{
+        await Api.post("education/create", {
+         userId,
+         school,
+         major,
+         position,
+       });
+ 
+       const res = await Api.get(`educationlist/${userId}`);
+       setEducations(res.data);
+       setIsAdding(false);
+      }
+      catch(error){
+        console.log(error);
+        if (error.response) {
+         const { data } = error.response;
+         console.error("data : ", data);
+       }
+      }
 
-      const res = await Api.get(`educationlist/${userId}`);
-      setEducations(res.data);
-      setOpen(false);
+     }
+     else {
+      const userId = editEducation.userId;
+
+      try{
+       await Api.put(`education/${editEducation.id}`, {
+         userId,
+         school,
+         major,
+         position,
+       });
+ 
+        const res = await Api.get(`educationlist/${userId}`);
+        setEditEducation(res.data);
+        setIsEditing(false); 
      }
      catch(error){
        console.log(error);
@@ -42,6 +72,8 @@ const EducationAddForm = ({
         const { data } = error.response;
         console.error("data : ", data);
       }
+     }
+
      }
   };
 
@@ -92,7 +124,9 @@ const EducationAddForm = ({
         }} 
         variant="primary" 
         type="submit" 
-        className="me-3">
+        className="me-3"
+        onClick = {handleSubmit}
+        >
          확인
         </Button>
         <Button
@@ -102,7 +136,9 @@ const EducationAddForm = ({
           backgroundColor:"#C4C4C4"
         }} 
         variant="secondary" 
-        onClick={() => setOpen((prev) => !prev)}
+        onClick={(e) => {
+          setIsAdding ? setIsAdding(false) : setIsEditing(false);
+        }}
         >
          취소
         </Button>
@@ -113,4 +149,4 @@ const EducationAddForm = ({
   )}
 
 
-export default EducationAddForm;
+export default EducationAddEditForm;

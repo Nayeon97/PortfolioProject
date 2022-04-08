@@ -10,7 +10,6 @@ function Awards() {
   //useState로 awards 상태를 생성
   const [awards, setAwards] = useState([]);
   const [isAdding, setIsAdding] = useState(false);
-  
   const {isEditable, portfolioOwnerId } = useContext(UserContext);
 
   // 삭제기능

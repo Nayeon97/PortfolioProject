@@ -1,4 +1,3 @@
-import React, {useState} from 'react'
 import { Image } from 'react-bootstrap';
 import mainImg from '../imgs/main.png';
 import './Style.css';

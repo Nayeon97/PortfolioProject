@@ -2,7 +2,14 @@ import React, { useState } from "react";
 import { Button, Form, Col, Row } from "react-bootstrap";
 import * as Api from "../../api";
 
-function AwardAddEditForm({ award, currentAward,portfolioOwnerId,isEditing,setAwards, setIsEditing, isAdding,setIsAdding }) {
+function AwardAddEditForm({ 
+  currentAward,
+  portfolioOwnerId,
+  isEditing,
+  setAwards, 
+  setIsEditing, 
+  isAdding,
+  setIsAdding }) {
   //useState로 title 상태를 생성
   const [title, setTitle] = useState(isEditing ? currentAward.title : "")
   //useState로 description 상태를 생성

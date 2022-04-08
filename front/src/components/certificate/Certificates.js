@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { Card, Button, Row, Col } from "react-bootstrap";
 import * as Api from "../../api";
 import Certificate from "./Certificate";
-import CertificateAddForm from "./CertificateAddForm";
+import CertificateAddEditForm from "./CertificateAddEditForm";
 
 import {UserContext} from "../common/Context";
 
@@ -60,10 +60,12 @@ function Certificates() {
           </Row>
         )}
         {isAdding && (
-          <CertificateAddForm
+          <CertificateAddEditForm
             portfolioOwnerId={portfolioOwnerId}
             setCertificates={setCertificates}
+            isAdding = {isAdding}
             setIsAdding={setIsAdding}
+            certificates = {certificates}
           />
         )}
       </Card.Body>

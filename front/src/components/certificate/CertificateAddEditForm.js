@@ -3,25 +3,45 @@ import { Button, Form, Col, Row } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import * as Api from "../../api";
 
-function CertificateEditForm({
+function CertificateAddEditForm({
+  isAdding,
+  setIsAdding,
   currentCertificate,
   setCertificates,
+  isEditing,
   setIsEditing,
+  portfolioOwnerId
 }) {
   //useState로 title 상태를 생성
-  const [title, setTitle] = useState(currentCertificate.title);
+  const [title, setTitle] = useState(isEditing ? currentCertificate.title : "");
   //useState로 description 상태를 생성
-  const [description, setDescription] = useState(
-    currentCertificate.description
-  );
+  const [description, setDescription] = useState(isEditing? currentCertificate.description : "");
   //useState로 whenDate 상태를 생성
   const [whenDate, setWhenDate] = useState(
-    new Date(currentCertificate.whenDate)
+    isEditing ?  new Date(currentCertificate.whenDate) : new Date()
   );
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if(isAdding){
+      const userId = portfolioOwnerId;
+
+      await Api.post("certificate/create", {
+        userId,
+        title,
+        description,
+        whenDate,
+      });
+  
+      // "educationlist/유저id" 엔드포인트로 GET 요청
+      const res = await Api.get("certificatelist", userId);
+      // certificates를 response의 data로 세팅
+      setCertificates(res.data);
+      // certificate를 추가하는 과정이 끝났으므로, isAdding을 false로 세팅
+      setIsAdding(false);
+    }
+    else {
     // currentCertificate의 userId를 userId 변수에 할당
     const userId = currentCertificate.userId;
 
@@ -39,6 +59,8 @@ function CertificateEditForm({
     setCertificates(res.data);
     // 편집 과정이 끝났으므로, isEditing을 false로 세팅
     setIsEditing(false);
+    }
+
   };
 
   return (
@@ -80,7 +102,9 @@ function CertificateEditForm({
            }}  
           variant="primary" 
           type="submit" 
-          className="me-3">
+          className="me-3"
+          onClick={handleSubmit}
+          >
             확인
           </Button>
           <Button 
@@ -90,7 +114,10 @@ function CertificateEditForm({
              backgroundColor:"#C4C4C4"
            }} 
           variant="secondary" 
-          onClick={() => setIsEditing(false)}>
+          onClick={(e) => {
+            setIsAdding ? setIsAdding(false) : setIsEditing(false);
+          }}
+          >
             취소
           </Button>
         </Col>
@@ -99,4 +126,4 @@ function CertificateEditForm({
   );
 }
 
-export default CertificateEditForm;
+export default CertificateAddEditForm;
