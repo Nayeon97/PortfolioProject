@@ -7,6 +7,7 @@ import { projectRouter } from "./routers/projectRouter";
 import { awardRouter } from "./routers/awardRouter";
 import { certificateAuthRouter} from './routers/certificateRouter';
 import { skillRouter } from "./routers/skillRouter";
+import { commentRouter } from "./routers/commentRouter";
 const app = express();
 
 // CORS 에러 방지
@@ -31,6 +32,7 @@ app.use(projectRouter);
 app.use(awardRouter);
 app.use(certificateAuthRouter);
 app.use(skillRouter);
+app.use(commentRouter);
 // 순서 중요 (router 에서 next() 시 아래의 에러 핸들링  middleware로 전달됨)
 app.use(errorMiddleware);
 
