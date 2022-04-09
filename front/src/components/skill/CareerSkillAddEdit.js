@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { Form, Button, Col, Row, Card} from 'react-bootstrap';
 import * as Api from "../../api";
 
-import getSkill from "../common/Skill";
+import getSkill from "../common/skill";
 
 const CareerSkillAddEdit = ({
   portfolioOwnerId,

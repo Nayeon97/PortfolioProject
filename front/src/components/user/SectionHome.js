@@ -1,7 +1,7 @@
 import React, { useEffect, useContext, useState } from "react";
 import { Container, Form, Button } from "react-bootstrap";
 
-import getSkill from "../common/Skill";
+import getSkill from "../common/skill";
 import * as Api from "../../api";
 import UserCard from "./UserCard";
 import { UserStateContext } from "../../App";
