@@ -167,7 +167,8 @@
 .mypage .educations,
 .mypage .awards,
 .mypage .certificates,
-.mypage .CareerSkill {
+.mypage .CareerSkill,
+.mypage .comments {
   width: 1000px;
   margin-bottom: 20px;
   border: 1px #c7c8d2;

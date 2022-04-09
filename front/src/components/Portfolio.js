@@ -13,7 +13,8 @@ import Educations from './education/Educations';
 import Awards from "./award/Awards";
 import Certificates from "./certificate/Certificates";
 import Projects from './project/Projects';
-import CareerSkills from './skill/CareerSkills'
+import CareerSkills from './skill/CareerSkills';
+import Comments from './comment/Comments';
 
 function Portfolio(isClick) {
   const navigate = useNavigate();
@@ -112,6 +113,10 @@ function Portfolio(isClick) {
         <div className='CareerSkill'>
         <CareerSkills/>
         </div>
+        <div className='comments'>
+        <Comments userState = {userState}/>
+        </div>
+
         </Col>
       </Row>
     </Container>
