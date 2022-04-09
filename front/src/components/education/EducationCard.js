@@ -7,8 +7,7 @@ import EducationAddEditForm from './EducationAddEditForm';
  * 학력 목록 컴포넌트입니다.
  * item : EducationForm 에서 전달받음.
  */
-const EducationCard = ({ education, isEditable, isEditing ,setIsEditing, setEducations, deleteHandler }) => {
-
+const EducationCard = ({ education, isEditable, isEditing ,setIsEditing, deleteHandler }) => {
   return (
     <Card.Text className='text-start'>
       <Row className="align-items-start">

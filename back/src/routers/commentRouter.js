@@ -14,8 +14,10 @@ commentRouter.post("/comment/create", async function (req, res, next) {
         "headers의 Content-Type을 application/json으로 설정해주세요"
       );
     }
-
-    const {userId, writerId, comment} = req.body;
+    
+    const writerId = req.currentUserId;
+    console.log(writerId);
+    const {userId, comment} = req.body;
 
     // 위 데이터를 유저 db에 추가하기
     const newComment = await CommentService.addComment({
@@ -71,7 +73,7 @@ commentRouter.get("/comment/:id", async function (req, res, next) {
 
           const currentUserId = req.currentUserId
 
-          const updatedComment = await CommentService.setComment({ commentId, toUpdate, currentUserId });
+          const updatedComment = await CommentService.setComments({ commentId, toUpdate, currentUserId });
 
           if (updatedComment.errorMessage) {
               throw new Error(updatedComment.errorMessage);

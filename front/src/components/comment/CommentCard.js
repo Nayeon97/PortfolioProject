@@ -1,6 +1,11 @@
+import { useContext } from 'react';
 import { Card, Button, Row, Col } from "react-bootstrap";
 
-function CommentCard({ comments, isEditable, setIsEditing, deleteHandler }) {
+import {ReviewContext} from "./Comments";
+
+function CommentCard({ comments, isEditable, setIsEditing, deleteHandler, setIsAdding, review }) {
+
+  const {reviews} = useContext(ReviewContext);
 
   return (
     <Card.Text className='commentCard'>
@@ -11,10 +16,7 @@ function CommentCard({ comments, isEditable, setIsEditing, deleteHandler }) {
           marginTop: "10px"
           }}>
         <div className='mvpCardItem'>
-        {comments[0].author}
-        </div>
-        <div className='mvpCardItem'>
-        {comments[0].content}
+        {review.comment}
         </div>
         </div>
         </Col>
@@ -23,7 +25,7 @@ function CommentCard({ comments, isEditable, setIsEditing, deleteHandler }) {
             <Button
               variant="outline-info"
               size="sm"
-              onClick={() => setIsEditing(true)}
+              onClick={() => setIsEditing(true) && setIsAdding(false)}
               className="mr-3 mb-1"
             >
               편집
@@ -32,7 +34,7 @@ function CommentCard({ comments, isEditable, setIsEditing, deleteHandler }) {
               className="mr-3"
               variant="outline-danger"
               size="sm"
-              onClick={() => deleteHandler(comments.id)}
+              onClick={() => deleteHandler(review._id)}
             >
               삭제
             </Button>

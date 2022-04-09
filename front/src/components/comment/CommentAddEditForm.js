@@ -3,59 +3,53 @@ import { Button, Form, Col, Row } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import * as Api from "../../api";
 
+import {ReviewContext} from "./Comments";
+
 import {WriterInfo} from "./Comments";
 
 function CommentAddEditForm({
   portfolioOwnerId,
   isEditing,
   setIsEditing,
-  isAdding,
-  setIsAdding,
-  setComments,
-  editComment,
-  setEditComment
+  isAdding
 }) {
 
-  const [content, setPutComment] = useState("");
+  const [comment, setPutComment] = useState("");
 
   const {writerId, writerName} = useContext(WriterInfo);
+  const {reviews, setReview} = useContext(ReviewContext);
 
-  console.log(writerId);
-  console.log(writerName);
-   
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if(isAdding) {
       const userId = portfolioOwnerId;
-
       // "certificate/create" 엔드포인트로 POST 요청
       await Api.post("comment/create", {
         userId,
-        writerId,
-        content
+        // writerId,
+        comment
       });
 
       const res = await Api.get(`commentlist/${userId}`);
-      setComments(res.data);
-      setIsAdding(false);
-
+      console.log("getget",res.data);
+      setReview(res.data);
+      setPutComment("");
     }
     else {
+      const userId = reviews.userId;
 
-      const userId = editComment.userId;
-
-      await Api.put(`comment/${editComment.id}`, {
+      await Api.put(`comment/${reviews._id}`, {
         userId,
         writerId,
-        content
+        comment
       });
 
        const res = await Api.get(`commentlist/${userId}`);
-       setEditComment(res.data);
+       setReview(res.data);
        setIsEditing(false); 
     }
-
   };
 
   return (
@@ -64,7 +58,7 @@ function CommentAddEditForm({
         <Form.Control
           type="text"
           placeholder="리뷰를 남겨주세요."
-          value={content}
+          value={comment}
           onChange={(e) => setPutComment(e.target.value)}
         />
       </Form.Group>

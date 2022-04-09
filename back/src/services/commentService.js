@@ -21,14 +21,8 @@ class CommentService {
     }
 
     //특정 쿼리의 댓글 내역 반환용
-    static async getComments(query) {
-        const comments = await Comment.findByQuery(query)
-        if (!comments) {
-            const errorMessage =
-                "해당 유저의 댓글이 존재하지 않습니다.";
-            return { errorMessage };
-        }
-
+    static async getCommentList({ userId }) {
+        const comments = await Comment.findByUserId({ userId });
         return comments;
     }
 
@@ -48,13 +42,12 @@ class CommentService {
     //특정 1개의 댓글 삭제
     static async deleteComment({ commentId, currentUserId }) {
         let comment = await Comment.findById({ _id: commentId })
-
+        console.log("comment", comment);
         if (!comment) {
             const errorMessage =
                 "해당 댓글이 존재하지 않습니다.";
             return { errorMessage };
         }
-
         if (comment.writerId !== currentUserId) {
             const errorMessage = "자신의 댓글이 아닌 댓글은 삭제할 수 없습니다."
             return { errorMessage }

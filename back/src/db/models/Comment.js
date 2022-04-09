@@ -4,19 +4,21 @@ class Comment {
     // 입력 받은 수상 정보 생성
     static async create({ newComment }) {
       const createdNewComment = await CommentModel.create(newComment);
+      createdNewComment.writerId = createdNewComment.writerId._id
       return createdNewComment;
     }
     
     // 수상이력의 고유한 id로 수상이력 검색(수정 할 때 사용)
     static async findById({ _id }) {
-      const comment = await CommentModel.findOne({ id: _id });
+      const comment = await CommentModel.findOne({ _id: _id }).populate('writerId', '-password');
       return comment;
-    }
+  }
+
 
     // 입력받은 userId의 모든 수상이력 검색
-    static async findByQuery(query) {
-        const comments = await CommentModel.find(query).sort('-createdAt');
-        return comments;
+    static async findByUserId({ userId }) {
+      const comments = await CommentModel.find({ userId });
+      return comments;
     }
 
     
@@ -34,7 +36,7 @@ class Comment {
       return updatedComment;
     }
   
-    static async deleteById({ commentId }) {
+    static async delete({ commentId }) {
       const deleteResult = await CommentModel.deleteOne({ id: commentId });
       const isDataDeleted = deleteResult.deletedCount === 1;
       return isDataDeleted;
