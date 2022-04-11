@@ -37,7 +37,7 @@ class Comment {
     }
   
     static async delete({ commentId }) {
-      const deleteResult = await CommentModel.deleteOne({ id: commentId });
+      const deleteResult = await CommentModel.deleteOne({ _id: commentId });
       const isDataDeleted = deleteResult.deletedCount === 1;
       return isDataDeleted;
     }
