@@ -16,6 +16,8 @@ function Comments({userState}) {
 
   const {isEditable, portfolioOwnerId } = useContext(UserContext);
 
+  console.log("portfolioOwnerId", portfolioOwnerId);
+
   const writerId = userState.user?.id;
   const writerName = userState.user?.name;
   

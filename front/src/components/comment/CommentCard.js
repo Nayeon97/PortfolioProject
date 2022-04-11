@@ -1,11 +1,11 @@
 import { useContext } from 'react';
 import { Card, Button, Row, Col } from "react-bootstrap";
 
-import {ReviewContext} from "./Comments";
+import {WriterInfo} from "./Comments";
 
 function CommentCard({ comments, isEditable, setIsEditing, deleteHandler, setIsAdding, review }) {
 
-  const {reviews} = useContext(ReviewContext);
+  const {writerId} = useContext(WriterInfo);
 
   return (
     <Card.Text className='commentCard'>
@@ -20,6 +20,7 @@ function CommentCard({ comments, isEditable, setIsEditing, deleteHandler, setIsA
         </div>
         </div>
         </Col>
+        {writerId === review.writerId && (
           <Col xs lg="1">
             <Button
               variant="outline-info"
@@ -38,6 +39,7 @@ function CommentCard({ comments, isEditable, setIsEditing, deleteHandler, setIsA
               삭제
             </Button>
           </Col>
+        )}
       </Row>
     </Card.Text>
   );
