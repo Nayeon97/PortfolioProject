@@ -24,7 +24,7 @@ function Comments({userState}) {
       try {
         if (window.confirm('정말로 삭제하시겠습니까?')) {
           await Api.delete(`comment/${id}`);
-          Api.get(`commentlist` ,portfolioOwnerId).then((res) => (res.data));
+          Api.get(`commentlist` ,portfolioOwnerId).then((res) => setReview(res.data));
           alert('삭제가 완료되었습니다.');
         }
       } 
