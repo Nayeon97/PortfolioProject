@@ -20,7 +20,6 @@ function CommentCard({ comments, isEditable, setIsEditing, deleteHandler, setIsA
         </div>
         </div>
         </Col>
-        {isEditable && (
           <Col xs lg="1">
             <Button
               variant="outline-info"
@@ -39,7 +38,6 @@ function CommentCard({ comments, isEditable, setIsEditing, deleteHandler, setIsA
               삭제
             </Button>
           </Col>
-        )}
       </Row>
     </Card.Text>
   );
