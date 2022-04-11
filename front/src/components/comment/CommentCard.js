@@ -6,6 +6,7 @@ import {WriterInfo} from "./Comments";
 function CommentCard({ comments, isEditable, setIsEditing, deleteHandler, setIsAdding, review }) {
 
   const {writerId} = useContext(WriterInfo);
+  console.log(review);
 
   return (
     <Card.Text className='commentCard'>
@@ -13,8 +14,17 @@ function CommentCard({ comments, isEditable, setIsEditing, deleteHandler, setIsA
       <Col>
       <div style={{
           display: "flex" ,
-          marginTop: "10px"
+          marginTop: "10px",
+          padding: "3px"
           }}>
+        <div style={{backgroundColor: "#ececec", display: "flex",marginRight: "10px"}}>
+        <div  style={{
+          marginRight: "3px"
+          }}>
+           작성자:
+        </div>
+        {review.writerName}
+        </div>
         <div className='mvpCardItem'>
         {review.comment}
         </div>

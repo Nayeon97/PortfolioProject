@@ -26,7 +26,6 @@ function CommentAddEditForm({
 
     if(isAdding) {
       const userId = portfolioOwnerId;
-      // "certificate/create" 엔드포인트로 POST 요청
       await Api.post("comment/create", {
         userId,
         writerName,
