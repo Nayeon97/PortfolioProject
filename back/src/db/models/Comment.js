@@ -24,7 +24,7 @@ class Comment {
     
     // 입력받은 값들로 수상이력 업데이트(수정)
     static async update({ commentId, fieldToUpdate, newValue}) {
-      const filter = { id: commentId };
+      const filter = { _id: commentId };
       const update = { [fieldToUpdate] : newValue};
       const option = { returnOriginal: false };
   

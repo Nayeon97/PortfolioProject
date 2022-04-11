@@ -67,7 +67,7 @@ commentRouter.get("/comment/:id", async function (req, res, next) {
       try{
           const commentId = req.params.id;
 
-          const comment = req.body.title ?? null; // ??는 왼쪽 피연산자가 null 또는 undefined일 때 오른쪽 피연산자 반환 그렇지 않으면 왼쪽 피연산자 반환
+          const comment = req.body.comment ?? null; // ??는 왼쪽 피연산자가 null 또는 undefined일 때 오른쪽 피연산자 반환 그렇지 않으면 왼쪽 피연산자 반환
 
           const toUpdate = { comment };
 

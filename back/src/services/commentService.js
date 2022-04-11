@@ -27,16 +27,19 @@ class CommentService {
     }
 
     //특정 1개의 댓글 수정
-    static async setComments({ filedtoUpdate, commentId, currentUserId }) {
+    static async setComments({ toUpdate, commentId }) {
         let comment = await Comment.findById({ _id: commentId })
-        if (comment.writerId !== currentUserId) {
-            const errorMessage = "자신의 댓글이 아닌 댓글은 수정할 수 없습니다."
+        if (!comment) {
+            const errorMessage = "해당 id를 댓글은 없습니다. 다시 한 번 확인해주세요.";
             return { errorMessage }
         }
-        else {
-            comment = await Comment.update({ commentId, filedtoUpdate })
-            return comment
+
+        if(toUpdate.comment){
+            const fieldToUpdate = "comment";
+            const newValue = toUpdate.comment;
+            comment = await Comment.update({ commentId, fieldToUpdate, newValue });
         }
+        return comment
     }
 
     //특정 1개의 댓글 삭제
