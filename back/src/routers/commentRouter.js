@@ -17,13 +17,14 @@ commentRouter.post("/comment/create", async function (req, res, next) {
     
     const writerId = req.currentUserId;
     console.log(writerId);
-    const {userId, comment} = req.body;
+    const {userId, comment, writerName} = req.body;
 
     // 위 데이터를 유저 db에 추가하기
     const newComment = await CommentService.addComment({
       userId : userId,
       writerId : writerId,
       comment : comment,
+      writerName : writerName,
     });
     
     if (newComment.errorMessage) {

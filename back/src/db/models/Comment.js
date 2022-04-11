@@ -4,7 +4,7 @@ class Comment {
     // 입력 받은 수상 정보 생성
     static async create({ newComment }) {
       const createdNewComment = await CommentModel.create(newComment);
-      createdNewComment.writerId = createdNewComment.writerId._id
+      // createdNewComment.writerId = createdNewComment.writerId._id
       return createdNewComment;
     }
     

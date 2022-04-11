@@ -2,8 +2,8 @@ import { Comment } from "../db";
 
 class CommentService {
     //신규 댓글 추가
-    static async addComment({ userId, writerId, comment }) {
-        const newComment = {userId, writerId, comment}
+    static async addComment({ userId, writerId, comment, writerName }) {
+        const newComment = {userId, writerId, comment, writerName}
         const createdNewComment = await Comment.create({ newComment })
         return createdNewComment
     }
@@ -30,7 +30,7 @@ class CommentService {
     static async setComments({ toUpdate, commentId }) {
         let comment = await Comment.findById({ _id: commentId })
         if (!comment) {
-            const errorMessage = "해당 id를 댓글은 없습니다. 다시 한 번 확인해주세요.";
+            const errorMessage = "해당 id를 가진 댓글은 없습니다. 다시 한 번 확인해주세요.";
             return { errorMessage }
         }
 
@@ -50,10 +50,6 @@ class CommentService {
             const errorMessage =
                 "해당 댓글이 존재하지 않습니다.";
             return { errorMessage };
-        }
-        if (comment.writerId !== currentUserId) {
-            const errorMessage = "자신의 댓글이 아닌 댓글은 삭제할 수 없습니다."
-            return { errorMessage }
         }
         comment = await Comment.delete({ commentId })
 
