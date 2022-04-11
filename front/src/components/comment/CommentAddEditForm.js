@@ -48,7 +48,6 @@ function CommentAddEditForm({
         comment
       });
        
-      console.log(userId);
        const res = await Api.get(`commentlist/${userId}`);
        setReview(res.data);
        setIsEditing(false); 
