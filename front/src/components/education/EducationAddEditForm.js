@@ -54,6 +54,8 @@ const EducationAddEditForm = ({
      else {
       const userId = editEducation.userId;
 
+      console.log(editEducation);
+
       try{
        await Api.put(`education/${editEducation.id}`, {
          userId,

@@ -11,7 +11,8 @@ function CommentAddEditForm({
   portfolioOwnerId,
   isEditing,
   setIsEditing,
-  isAdding
+  isAdding,
+  review
 }) {
 
   const [comment, setPutComment] = useState("");
@@ -38,14 +39,16 @@ function CommentAddEditForm({
       setPutComment("");
     }
     else {
-      const userId = reviews.userId;
+      const userId = review.userId;
+      console.log(review._id);
 
-      await Api.put(`comment/${reviews._id}`, {
+      await Api.put(`comment/${review._id}`, {
         userId,
         writerId,
         comment
       });
-
+       
+      console.log(userId);
        const res = await Api.get(`commentlist/${userId}`);
        setReview(res.data);
        setIsEditing(false); 

@@ -11,7 +11,7 @@ function Comment({setIsAdding,isEditable, deleteHandler, review}) {
         <CommentAddEditForm 
          setIsEditing={setIsEditing} 
          isEditing = {isEditing}
-
+         review = {review}
          />
       ) : (
         <CommentCard 
