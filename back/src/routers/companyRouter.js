@@ -1,36 +1,39 @@
-import is from "@sindresorhus/is";
-import { Router } from "express";
-import { loginRequired } from "../middlewares/loginRequired";
-import { companyService } from "../services/companyService";
-import { Company } from "../db";
+import is from '@sindresorhus/is';
+import { Router } from 'express';
+import { loginRequired } from '../middlewares/loginRequired';
+import { companyService } from '../services/companyService';
+import { Company } from '../db';
 
 const companyRouter = Router();
-const viewObj = new Object()
+const viewObj = new Object();
 
-companyRouter.post("/company/register", async function (req, res, next) {
+companyRouter.post('/company/register', async function (req, res, next) {
   try {
     if (is.emptyObject(req.body)) {
       throw new Error(
-        "headers의 Content-Type을 application/json으로 설정해주세요"
+        'headers의 Content-Type을 application/json으로 설정해주세요'
       );
     }
 
     // req (request) 에서 데이터 가져오기
-    const {companyName, email, password, description, filePath} = req.body
+    const { name, companyName, email, password, filePath, contact, position } =
+      req.body;
     // 위 데이터를 유저 db에 추가하기
     const newCompany = await companyService.addCompany({
+      name,
       companyName,
       email,
       password,
-      description,
       filePath,
+      contact,
+      position,
     });
 
     if (newCompany.errorMessage) {
       // throw new Error(newUser.errorMessage);
       return res.status(400).json({
         status: 'error',
-        error : newCompany.errorMessage,
+        error: newCompany.errorMessage,
       });
     }
 
@@ -40,7 +43,7 @@ companyRouter.post("/company/register", async function (req, res, next) {
   }
 });
 
-companyRouter.post("/company/login", async function (req, res, next) {
+companyRouter.post('/company/login', async function (req, res, next) {
   try {
     // req (request) 에서 데이터 가져오기
 
@@ -53,7 +56,7 @@ companyRouter.post("/company/login", async function (req, res, next) {
       // throw new Error(company.errorMessage);
       return res.status(400).json({
         status: 'error',
-        error : company.errorMessage,
+        error: company.errorMessage,
       });
     }
 
@@ -64,7 +67,7 @@ companyRouter.post("/company/login", async function (req, res, next) {
 });
 
 companyRouter.get(
-  "/companylist",
+  '/companylist',
   //loginRequired, 삭제
   async function (req, res, next) {
     try {
@@ -78,7 +81,7 @@ companyRouter.get(
 );
 
 companyRouter.get(
-  "/company/current",
+  '/company/current',
   //loginRequired,
   async function (req, res, next) {
     try {
@@ -100,7 +103,7 @@ companyRouter.get(
 );
 
 companyRouter.put(
-  "/company/:id",
+  '/company/:id',
   //loginRequired,
   async function (req, res, next) {
     try {
@@ -112,9 +115,12 @@ companyRouter.put(
       const password = req.body.password ?? null;
       const description = req.body.description ?? null;
 
-      const toUpdate = { companyName, email, password, description};
+      const toUpdate = { companyName, email, password, description };
       // 해당 사용자 아이디로 사용자 정보를 db에서 찾아 업데이트함. 업데이트 요소가 없을 시 생략함
-      const updatedCompany = await companyService.setCompany({ companyId, toUpdate });
+      const updatedCompany = await companyService.setCompany({
+        companyId,
+        toUpdate,
+      });
 
       if (updatedCompany.errorMessage) {
         throw new Error(updatedCompany.errorMessage);
@@ -127,37 +133,34 @@ companyRouter.put(
 );
 
 companyRouter.get(
-  "/company/:id",
+  '/company/:id',
   //loginRequired,
   async function (req, res, next) {
     try {
       const companyId = req.params.id;
 
       // 사용자마다 하루에 조회수 1씩
-      const currentId = req.currentCompanyId
+      const currentId = req.currentCompanyId;
 
       const company = await Company.findById({ companyId });
-      if (company){
+      if (company) {
         if (!viewObj[companyId]) {
-               viewObj[companyId] = []
+          viewObj[companyId] = [];
         }
-        if (viewObj[companyId].indexOf(currentId) == -1){
-          company.visited ++
-          viewObj[companyId].push(currentId)
+        if (viewObj[companyId].indexOf(currentId) == -1) {
+          company.visited++;
+          viewObj[companyId].push(currentId);
           setTimeout(() => {
-            viewObj[companyId].splice(
-              viewObj[companyId].indexOf(currentId),
-              1
-            )
-          }, 86400000)
-          for (let i in viewObj){
-             if (i.length ==0){
-               delete viewObj.i
-             }
-           }
+            viewObj[companyId].splice(viewObj[companyId].indexOf(currentId), 1);
+          }, 86400000);
+          for (let i in viewObj) {
+            if (i.length == 0) {
+              delete viewObj.i;
+            }
+          }
         }
-        await company.save()
-      res.status(200).send(company);
+        await company.save();
+        res.status(200).send(company);
       }
     } catch (error) {
       next(error);
@@ -175,18 +178,19 @@ companyRouter.get(
 // });
 
 companyRouter.delete(
-  "/company/:id", 
-  //loginRequired, 
+  '/company/:id',
+  //loginRequired,
   async function (req, res, next) {
-    try{
+    try {
       const companyId = req.params.id;
-      
-      await companyService.deleteCompany({ companyId })
 
-      res.send("status : success")
-    } catch(error){
-      next(error)
+      await companyService.deleteCompany({ companyId });
+
+      res.send('status : success');
+    } catch (error) {
+      next(error);
     }
-});
+  }
+);
 
 export { companyRouter };

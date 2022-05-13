@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Schema, model } from 'mongoose';
 
 const CompanySchema = new Schema(
   {
@@ -7,6 +7,14 @@ const CompanySchema = new Schema(
       required: true,
     },
     email: {
+      type: String,
+      required: true,
+    },
+    name: {
+      type: String,
+      required: true,
+    },
+    position: {
       type: String,
       required: true,
     },
@@ -21,9 +29,9 @@ const CompanySchema = new Schema(
     description: {
       type: String,
       required: false,
-      default: "설명이 아직 없습니다. 추가해 주세요.",
+      default: '설명이 아직 없습니다. 추가해 주세요.',
     },
-    visited : {
+    visited: {
       type: Number,
       required: false,
       default: 0,
@@ -31,19 +39,18 @@ const CompanySchema = new Schema(
     loginMethod: {
       type: String,
       required: false,
-      default: 'email'
-  },
-    filePath:{
-        type : String,
-        required: true,
-    }
-
+      default: 'email',
+    },
+    filePath: {
+      type: String,
+      required: true,
+    },
   },
   {
     timestamps: true,
   }
 );
 
-const CompanyModel = model("Company", CompanySchema);
+const CompanyModel = model('Company', CompanySchema);
 
 export { CompanyModel };

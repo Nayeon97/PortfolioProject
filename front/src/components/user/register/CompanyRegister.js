@@ -7,6 +7,7 @@ const CompanyRegister = ({ handleClose }) => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [name, setName] = useState('');
+  const [companyName, setCompanyName] = useState('');
   const [position, setPosition] = useState('');
   const [contact, setContact] = useState('');
 
@@ -40,13 +41,17 @@ const CompanyRegister = ({ handleClose }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    const filePath = '1';
     try {
       // "user/register" 엔드포인트로 post요청함.
-      await Api.post('user/register', {
+      await Api.post('company/register', {
+        filePath,
         email,
         password,
         name,
+        companyName,
+        position,
+        contact,
       });
       handleClose(false);
       setEmail('');
@@ -72,11 +77,25 @@ const CompanyRegister = ({ handleClose }) => {
   return (
     <>
       <Form onSubmit={handleSubmit}>
-        <Form.Group controlId="companyLogo" className="mb-3">
-          <Form.Label>회사 로고</Form.Label>
-          <Form.Control type="file" size="sm" />
-        </Form.Group>
-
+        <Row>
+          <Col>
+            <Form.Group controlId="companyLogo" className="mb-3">
+              <Form.Label>회사 로고</Form.Label>
+              <Form.Control type="file" size="sm" />
+            </Form.Group>
+          </Col>
+          <Col>
+            <Form.Group controlId="companyLogo" className="mb-3">
+              <Form.Label>회사명</Form.Label>
+              <Form.Control
+                ype="text"
+                autoComplete="off"
+                value={companyName}
+                onChange={(e) => setCompanyName(e.target.value)}
+              />
+            </Form.Group>
+          </Col>
+        </Row>
         <Row>
           <Col>
             <Form.Group controlId="registerName">
