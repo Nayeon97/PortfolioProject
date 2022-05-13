@@ -10,6 +10,14 @@ const CompanySchema = new Schema(
       type: String,
       required: true,
     },
+    name: {
+      type: String,
+      required: true,
+    },
+    position: {
+      type: String,
+      required: true,
+    },
     companyName: {
       type: String,
       required: true,

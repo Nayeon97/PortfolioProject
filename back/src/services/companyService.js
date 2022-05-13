@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 import { CompanyModel } from "../db/schemas/company";
 
 class companyService {
-    static async addCompany({ companyName, email, password, description, filePath }) {
+    static async addCompany({ name, companyName, email, password, filePath, position, contact }) {
       // 이메일 중복 확인
       const company = await Company.findByEmail({ email });
       if (company) {
@@ -19,7 +19,7 @@ class companyService {
   
       // id 는 유니크 값 부여
       const id = uuidv4();
-      const newCompany = { id, companyName, email, password: hashedPassword, description, filePath, visited: 0 };
+      const newCompany = { id, name, companyName, email, password: hashedPassword, filePath, position, contact, visited: 0 };
   
       // db에 저장
       const createdNewCompany = await Company.create({ newCompany });

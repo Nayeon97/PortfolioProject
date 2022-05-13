@@ -16,14 +16,16 @@ companyRouter.post("/company/register", async function (req, res, next) {
     }
 
     // req (request) 에서 데이터 가져오기
-    const {companyName, email, password, description, filePath} = req.body
+    const { name, companyName, email, password, filePath, contact, position } = req.body
     // 위 데이터를 유저 db에 추가하기
     const newCompany = await companyService.addCompany({
+      name,
       companyName,
       email,
       password,
-      description,
       filePath,
+      contact,
+      position,
     });
 
     if (newCompany.errorMessage) {
