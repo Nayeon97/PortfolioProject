@@ -72,6 +72,11 @@ const CompanyRegister = ({ handleClose }) => {
   return (
     <>
       <Form onSubmit={handleSubmit}>
+        <Form.Group controlId="companyLogo" className="mb-3">
+          <Form.Label>회사 로고</Form.Label>
+          <Form.Control type="file" size="sm" />
+        </Form.Group>
+
         <Row>
           <Col>
             <Form.Group controlId="registerName">

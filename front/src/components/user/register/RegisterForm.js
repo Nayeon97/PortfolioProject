@@ -24,8 +24,17 @@ function RegisterForm({ show, handleClose }) {
       <Modal.Header closeButton onClick={handleClose} />
       <Row className="justify-content-md-center mt-5">
         <Col lg={8}>
-          {/* <UserRegister handleClose={handleClose} /> */}
-          <CompanyRegister />
+          <Form.Check
+            type="switch"
+            id="custom-switch"
+            label="관리자 회원가입"
+            onChange={() => setDistinguishUser(!distinguishUser)}
+          />
+          {distinguishUser ? (
+            <UserRegister handleClose={handleClose} />
+          ) : (
+            <CompanyRegister />
+          )}
         </Col>
       </Row>
     </Modal>
