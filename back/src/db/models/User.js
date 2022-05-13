@@ -28,6 +28,11 @@ class User {
     return users;
   }
 
+  static async findByLoginMethod({ loginMethod }) {
+    const user = await UserModel.findOne({ loginMethod });
+    return user;
+}
+
   static async update({ userId, fieldToUpdate, newValue }) {
     const filter = { id: userId };
     const update = { [fieldToUpdate]: newValue };

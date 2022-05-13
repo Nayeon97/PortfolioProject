@@ -1,6 +1,6 @@
 import { Schema, model } from "mongoose";
 
-const UserSchema = new Schema(
+const CompanySchema = new Schema(
   {
     id: {
       type: String,
@@ -10,7 +10,7 @@ const UserSchema = new Schema(
       type: String,
       required: true,
     },
-    name: {
+    companyName: {
       type: String,
       required: true,
     },
@@ -33,6 +33,10 @@ const UserSchema = new Schema(
       required: false,
       default: 'email'
   },
+    filePath:{
+        type : String,
+        required: true,
+    }
 
   },
   {
@@ -40,6 +44,6 @@ const UserSchema = new Schema(
   }
 );
 
-const UserModel = model("User", UserSchema);
+const CompanyModel = model("Company", CompanySchema);
 
-export { UserModel };
+export { CompanyModel };

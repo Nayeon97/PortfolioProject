@@ -8,6 +8,7 @@ import { awardRouter } from "./routers/awardRouter";
 import { certificateAuthRouter} from './routers/certificateRouter';
 import { skillRouter } from "./routers/skillRouter";
 import { commentRouter } from "./routers/commentRouter";
+import { companyRouter } from "./routers/companyRouter";
 const app = express();
 
 // CORS 에러 방지
@@ -27,6 +28,7 @@ app.get("/", (req, res) => {
 
 // router, service 구현 (userAuthRouter는 맨 위에 있어야 함.)
 app.use(userAuthRouter);
+app.use(companyRouter);
 app.use(educationRouter);
 app.use(projectRouter);
 app.use(awardRouter);
