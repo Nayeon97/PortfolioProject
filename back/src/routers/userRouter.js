@@ -3,9 +3,10 @@ import { Router } from 'express';
 import { loginRequired } from '../middlewares/loginRequired';
 import { userAuthService } from '../services/userService';
 import { User } from '../db';
-import { imageUploader } from '../imageUploader';
+// import { imageUploader } from '../imageUploader';
 const userAuthRouter = Router();
-const viewObj = new Object();
+const imageUploader = require("../imageUploader")
+
 
 userAuthRouter.post('/user/register', async function (req, res, next) {
   try {
