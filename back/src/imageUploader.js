@@ -25,4 +25,4 @@ const imageUploader = multer({
   }),
 });
 
-module.exports = imageUploader;
+export default imageUploader
