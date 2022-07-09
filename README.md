@@ -32,8 +32,6 @@ https://chatter-amount-ef9.notion.site/f2b0b6f046ab4d8b950da3c99d95450b
 
 #### 📑 발표 자료 https://www.miricanvas.com/v/1yzgbc
 ***
-팀프로젝트는 끝이 났지만, 코드 리팩토링과 기능 추가, 개선을 계속 할 예정입니다.
-
 ---
 
 본 프로젝트에서 제공하는 모든 코드 등의는 저작권법에 의해 보호받는 ㈜엘리스의 자산이며, 무단 사용 및 도용, 복제 및 배포를 금합니다.
